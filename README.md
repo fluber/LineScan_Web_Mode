@@ -37,6 +37,6 @@ LIBS += -L"C:\Program Files (x86)\Basler\clBBProtocolLib\lib" -lClBBProtocolLib 
 # Import Software Configuration:
 1.Use Balser Pylon Viewer to set TapGeometry 1X8   
 2.Use MultiCam to create camera file for raL12288-66km_L12288RG   
-3.Calculator RateDivisionFactor = optical accuracy by 1 pixel / moving distance by 1 pulse. ex: optical accuracy by 1 pixel: 60um, moving distance by 1 pulse: 10um   
+3.Calculate RateDivisionFactor = optical accuracy by 1 pixel / moving distance by 1 pulse. ex: optical accuracy by 1 pixel: 60um, moving distance by 1 pulse: 10um   
 RateDivisionFactor = 60um / 10um = 6   
 
