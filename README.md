@@ -4,7 +4,7 @@ Use Basler Camera Link Line Scan Camera + Euresys GrabLink Full Card
 
 This souce cdoe demo Use Basler Camera Link Camera + Euresys GrabLink Full Card (AcquistionMode: Web).
 
-# Reference SDK: 
+# Reference SDK (32 bit): 
 
 1.Euresys MultiCam 6.18 SDK, download https://www.euresys.com/en/Support/Download-area   
 
