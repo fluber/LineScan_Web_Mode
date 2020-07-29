@@ -71,6 +71,8 @@ private slots:
 
     void tcpserver_newConnection();
     void receive_message(const QString &message);
+    void on_cbConvert_toggled(bool checked);
+
 private:
     void getSerialPortList();
     void modifyBalserCameraParameter();

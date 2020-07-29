@@ -37,6 +37,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sliderRateDivisionFactor->setValue(m_settings->value("rateDivisionFactor", 1).toInt());
     ui->ckAutoSave->setChecked(m_settings->value("autoSave", false).toBool());
     ui->btnStop->setEnabled(false);
+    ui->cbConvert->setChecked(m_settings->value("useConvert").toBool());
+    ui->edtEncoderPitch->setText(m_settings->value("encoderPitch").toString());
+    ui->edtLinePitch->setText(m_settings->value("linePitch").toString());
+    on_cbConvert_toggled(m_settings->value("useConvert").toBool());
     updateActions();
 
     connect(m_tcpServer, SIGNAL(newConnection()), this, SLOT(tcpserver_newConnection()));
@@ -165,13 +169,24 @@ void MainWindow::on_btnGo_clicked()
         McSetParamInt(m_Channel, MC_NextTrigMode, MC_NextTrigMode_REPEAT);
         McSetParamInt(m_Channel, MC_SeqLength_Ln, MC_INDETERMINATE);
         McSetParamInt(m_Channel, MC_Expose, MC_Expose_PLSTRG);
-        McSetParamInt(m_Channel, MC_LineRateMode, MC_LineRateMode_PULSE);
+        if (ui->cbConvert->isChecked())
+        {
+            McSetParamInt(m_Channel, MC_LineRateMode, MC_LineRateMode_CONVERT);
+            McSetParamInt(m_Channel, MC_EncoderPitch, ui->edtEncoderPitch->text().toInt());
+            McSetParamInt(m_Channel, MC_LinePitch, ui->edtLinePitch->text().toUInt());
+
+        }
+        else
+        {
+            McSetParamInt(m_Channel, MC_LineRateMode, MC_LineRateMode_PULSE);
+            McSetParamInt(m_Channel, MC_RateDivisionFactor, ui->sliderRateDivisionFactor->value());
+        }
         McSetParamInt(m_Channel, MC_ForwardDirection, MC_ForwardDirection_A_LEADS_B);
         McSetParamInt(m_Channel, MC_LineTrigCtl, MC_LineTrigCtl_DIFF_PAIRED);
         McSetParamInt(m_Channel, MC_LineTrigLine, MC_LineTrigLine_DIN1_DIN2);
         McSetParamInt(m_Channel, MC_LineTrigEdge, MC_LineTrigEdge_ALL_A_B);
         McSetParamInt(m_Channel, MC_LineTrigFilter, MC_LineTrigFilter_Filter_10us);
-        McSetParamInt(m_Channel, MC_RateDivisionFactor, ui->sliderRateDivisionFactor->value());
+
         McGetParamInt(m_Channel, MC_ImageSizeX, &m_SizeX);
         McGetParamInt(m_Channel, MC_ImageSizeY, &m_SizeY);
         McGetParamInt(m_Channel, MC_BufferPitch, &m_BufferPitch);
@@ -447,3 +462,11 @@ void MainWindow::receive_message(const QString &message)
 
 }
 
+
+void MainWindow::on_cbConvert_toggled(bool checked)
+{
+    ui->sliderRateDivisionFactor->setEnabled(!checked);
+    ui->edtEncoderPitch->setEnabled(checked);
+    ui->edtLinePitch->setEnabled(checked);
+    m_settings->setValue("useConvert", checked);
+}
