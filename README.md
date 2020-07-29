@@ -39,4 +39,4 @@ LIBS += -L"C:\Program Files (x86)\Basler\clBBProtocolLib\lib" -lClBBProtocolLib 
 2.Use MultiCam to create camera file for raL12288-66km_L12288RG   
 3.Calculate RateDivisionFactor = optical accuracy by 1 pixel / moving distance by 1 pulse. ex: optical accuracy by 1 pixel: 60um, moving distance by 1 pulse: 10um   
 RateDivisionFactor = 60um / 10um = 6   
-
+4.Convert Logic: if pulse move 50us, optical accuracy is 65us. then each 1.3 pulse will take a line.  so EncoderPitch = 1000, LinePitch = 1300. 
